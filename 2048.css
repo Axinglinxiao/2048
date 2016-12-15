@@ -1,0 +1,43 @@
+*{
+    margin-top:20px;
+    padding:0;
+    font-family: "Comic Sans MS",Arial,"Microsoft New Tai Lue";
+}
+div#head{
+    width:420px;
+    background: #ccc;
+    margin: 0 auto;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+#head h1{
+    float:left;
+    margin: 0 100px 0 50px;
+}
+#head h4{
+    clear: both;
+    margin-left: 50px;
+}
+#head div:first-child{
+    margin: 10px 5px ;
+}
+.score{
+    position: relative;
+    top: 20px;
+}
+.row{
+    margin:10px auto;
+    width:380px;
+    height:380px;
+    padding:5px 10px;
+    background:#bbada0;
+    border-radius:10px;
+    position:relative;
+}
+.span{
+    width:20%;
+    height:20%;
+    border-radius:6px;
+    position:absolute;
+    background:#ccc0b3;
+}
