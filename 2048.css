@@ -1,14 +1,13 @@
 *{
-    margin-top:20px;
+    margin:0;
     padding:0;
-    font-family: "Comic Sans MS",Arial,"Microsoft New Tai Lue";
 }
 div#head{
     width:420px;
-    background: #ccc;
     margin: 0 auto;
     border: 1px solid #fff;
     border-radius: 5px;
+    font-size: 1.2em;
 }
 #head h1{
     float:left;
@@ -21,23 +20,30 @@ div#head{
 #head div:first-child{
     margin: 10px 5px ;
 }
-.score{
+.sco{
     position: relative;
     top: 20px;
 }
-.row{
+.grid_container{
     margin:10px auto;
-    width:380px;
-    height:380px;
-    padding:5px 10px;
-    background:#bbada0;
+    width:500px;
+    height:500px;
     border-radius:10px;
-    position:relative;
+    background:#bbada0
 }
-.span{
+.grid_cell{
+    float: left;
+    margin-top:20px;
+    margin-left:4%;
     width:20%;
-    height:20%;
-    border-radius:6px;
-    position:absolute;
-    background:#ccc0b3;
+    height:100px;
+    border-radius:5px;
+    background:#ccc0b3;  /*ccc0b3*/
+}
+.number{
+    font-family: Arial,"Comic Sans MS",Serif;
+    line-height: 100px;
+    text-align:center;
+    font-weight: bold;
+    font-size: 40px;
 }
