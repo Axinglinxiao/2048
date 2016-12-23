@@ -1,6 +1,7 @@
 *{
     margin:0;
     padding:0;
+    font-family: "Comic Sans MS", Georgia, times, Serif;
 }
 div#head{
     width:420px;
@@ -38,10 +39,8 @@ div#head{
     width:20%;
     height:100px;
     border-radius:5px;
-    background:#ccc0b3;  /*ccc0b3*/
 }
 .number{
-    font-family: Arial,"Comic Sans MS",Serif;
     line-height: 100px;
     text-align:center;
     font-weight: bold;

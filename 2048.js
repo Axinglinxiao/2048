@@ -28,19 +28,24 @@ function random() {                      //随机产生数字
         return;
     }
     if(move){
-        var ran = Math.floor(Math.random() * 16);     //0-15
-        var i = Math.floor(ran % 4);                  //0-3
-        var j = Math.floor(ran % 4);                  //0-3
-        if(a[i][j] == 0){
-            a[i][j] = Math.floor(Math.random() * 2 + 1) * 2;          //随机取到2或4 **Math.random()取不到1
-            over = true;
-            move = false;
-        }
+        while(1){
+            var ran = Math.floor(Math.random() * 16);     //0-15
+            var i = Math.floor(ran / 4);                  //0-3
+            var j = Math.floor(ran % 4);                  //0-3
+            if(a[i][j] === 0){
+                a[i][j] = Math.floor(Math.random() * 2 + 1) * 2;          //随机取到2或4 **Math.random()取不到1
+                over = true;
+                move = false;
+                break;
+            }
+        }                                      //遇到break跳出循环
     }
 }
 
 function Background(num) {
     switch (num){
+        case 0:
+            return '#ccc0b3';
         case 2:
             return '#eee4da';
         case 4:
@@ -73,14 +78,14 @@ function show() {                        //页面展示
     for(var i = 0; i < 4; i++){
         for(var j = 0; j < 4; j++){
             $('#grid_cell_'+ i + '_' + j).removeClass();                       //移动格子后不改变原来的颜色
-            $('#grid_cell_'+ i + '_' + j).addClass('number text-center grid_cell');
+            $('#grid_cell_'+ i + '_' + j).addClass('number grid_cell');
             if(a[i][j] == 0){
                 $('#grid_cell_'+ i + '_' + j).html('');
             }
             else{
                 $('#grid_cell_'+ i + '_' + j).html(a[i][j]);
             }
-            $('grid_cell_'+ i + '_' + j).addClass('background',Background(a[i][j]));
+            $('#grid_cell_'+ i + '_' + j).css('background-color',Background(a[i][j]));
         }
     }
     $('#score').html(Score);
@@ -89,8 +94,8 @@ function show() {                        //页面展示
 function UpMove(j) {
     for(var i = 3; i > 0; i--){
         if(a[i][j] && !a[i-1][j]){
-            a[i][j] = a[i-1][j];
-            a[i-1][j] = 0;
+            a[i-1][j] = a[i][j];
+            a[i][j] = 0;
             move = true;                               //还能移动游戏未结束
             UpMove(j);
         }
@@ -98,11 +103,11 @@ function UpMove(j) {
 }
 
 function UpScore(j) {                                 //计算分数
-    for(var i = 3; i > 0; i--){
-        if(a[i][j] && a[i][j] == a[i-1][j]){
-            a[i-1][j] = a[i][j] * 2;
-            Score += a[i-1][j];
-            a[i][j] = 0;
+    for(var i = 0; i < 3; i++){
+        if(a[i][j] && a[i][j] === a[i+1][j]){
+            a[i][j] = a[i+1][j] * 2;
+            Score += a[i][j];
+            a[i+1][j] = 0;
             move = true;                              //两数合并游戏未结束
             UpMove(j);
         }
@@ -121,11 +126,11 @@ function DownMove(j) {
 }
 
 function DownScore(j) {
-    for(var i = 0; i < 3; i++){
-        if(a[i][j] && a[i][j] == a[i+1][j]){
-            a[i+1][j] = a[i][j] * 2;
-            Score += a[i+1][j];
-            a[i][j] = 0;
+    for(var i = 3; i > 0; i--){
+        if(a[i][j] && a[i][j] === a[i-1][j]){
+            a[i][j] = a[i-1][j] * 2;
+            Score += a[i][j];
+            a[i-1][j] = 0;
             move = true;
             DownMove(j);
         }
@@ -144,11 +149,11 @@ function LeftMove(i) {
 }
 
 function LeftScore(i) {
-    for(var j = 3; j > 0; j--){
-        if(a[i][j] && a[i][j] == a[i][j-1]){
-            a[i][j-1] = a[i][j] * 2;
-            Score += a[i][j-1];
-            a[i][j] = 0;
+    for(var j = 0; j < 3; j++){
+        if(a[i][j] && a[i][j] === a[i][j+1]){
+            a[i][j] = a[i][j+1] * 2;
+            Score += a[i][j];
+            a[i][j+1] = 0;
             move = true;
             LeftMove(i);
         }
@@ -167,11 +172,11 @@ function RightMove(i) {
 }
 
 function RightScore(i) {
-    for(var j = 0; j < 3; j++){
-        if(a[i][j] && a[i][j] == a[i][j+1]){
-            a[i][j+1] = a[i][j] * 2;
-            Score += a[i][j+1];
-            a[i][j] = 0;
+    for(var j = 3; j > 0; j--){
+        if(a[i][j] && a[i][j] === a[i][j-1]){
+            a[i][j] = a[i][j-1] * 2;
+            Score += a[i][j];
+            a[i][j-1] = 0;
             move = true;
             RightMove(i);
         }
@@ -217,20 +222,23 @@ function right() {                                                   //向右移
 $(document).ready(function () {                                      //开始就产生两个随机数
     var random = Math.floor(Math.random() * 16);
     var i = Math.floor(random / 4);
-    var j = Math.floor(random / 4);
+    var j = Math.floor(random % 4);                                  //不要两个都用/或%
     a[i][j] = 2;
     random = Math.floor(Math.random() * 16);
-    i = Math.floor(random / 4);
-    j = Math.floor(random / 4);
-    a[i][j] = 2;
+    var m = Math.floor(random / 4);
+    var n = Math.floor(random % 4);
+    if(m===i && n===j)
+        a[m+1][n+1] = 2;
+    else
+        a[m][n] = 2;
     show();
     $(document).keyup(function (a) {
         if(a.keyCode == 37)
             left();
         if(a.keyCode == 38)
-            right();
-        if(a.keyCode == 39)
             up();
+        if(a.keyCode == 39)
+            right();
         if(a.keyCode == 40)
             down();
     });
